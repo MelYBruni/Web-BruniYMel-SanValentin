@@ -1,0 +1,149 @@
+<!DOCTYPE html> <!-- esto es un comentario-->
+<html lang="es">
+
+    <head>
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="styles-nosotros.css" /> 
+        <title>Melcita te ama</title>
+        <link rel="shortcut icon" href="imagenes/corazon.ico" type="image/x-icon" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    </head>      
+
+    <body>
+ <header class="header-galeria" id="inicio">
+        <nav class="navbar">
+            <div class="logo">M & B</div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#carta">Carta</a></li>
+                <li><a href="index.html#historia">Historia</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+            </ul>
+        </nav>
+    </header> 
+
+    <div id="fondo-corazones" class="contenedor-fondo"></div> 
+
+    <section class="seccion-galeria-nosotros">
+        <div class="intro-contenedor"> 
+            <h1 class="animar-elemento"> Un paseo por nuestros recuerdos </h1>
+            <p class="animar-elemento retraso"> 
+                <strong> 
+                    Hay cientos de fotos que tengo en mi galería y que estoy segura que nunca compartí con vos. Durante tantos años registré momentos de nuestras vidas juntos y me parece que ya es hora de encontrar su lugar. Mientras esta página siga teniendo su propio host, vas a poder visitar y recordar nuestro arte. <br><br>
+                    Según google: <em>El arte se define como una forma de expresión humana, creativa y estética que interpreta la realidad o la imaginación a través de recursos plásticos, lingüísticos, sonoros o corporales. Es una manifestación cultural que refleja emociones, ideas y percepciones, sirviendo como medio de comunicación y valoración simbólica del mundo.</em> Creo que es una muy buena definición para una galería que trate de nuestros momentos. En estas fotos hay expresiones de amor, de ternura y de risa sincera, que muestran la realidad de lo que sentimos el uno por el otro. Hay manifestaciones de cariño tanto en espacios privados como públicos. Y también hay comida, mucha comida en la mayoría de nuestros encuentros. Si observamos el panorama general, podemos apreciar nuestra travesía a través de la vida de la mano del otro. <br><br>
+                    Cada día soy más feliz a tu lado. Sos parte de lo mejor de mí. Y no hay nada que me enorgullezca más que nuestra historia juntos. Crecimos a la par, no solo en edad sino en personalidad, como también, en madurez y alma. Y seguirá siendo así mientras estemos juntos. <br><br> 
+                    Te amo con mi vida entera. 
+                </strong>
+            </p>
+        </div>
+        
+        <div id="galeria-automatica" class="pared-masonry"> </div>
+
+    </section>
+
+        <div id="modal-sorpresa" class="modal-sorpresa">
+        <img src="imagenes/gatitoAmor.png" alt="gatitos" class="foto-sorpresa">
+        </div>
+
+
+    <script>
+        // 1. GENERADOR DE CORAZONES
+        const contenedor = document.getElementById('fondo-corazones');
+        const cantidadCorazones = 150; 
+
+        for (let i = 0; i < cantidadCorazones; i++) {
+            const corazon = document.createElement('span');
+            corazon.classList.add('corazon');
+            corazon.innerHTML = '❤';
+            const esCeleste = Math.random() > 0.5;
+            corazon.style.color = esCeleste ? 'var(--celeste)' : 'var(--blanco)';
+            const delay = Math.random() * 5; 
+            const duracion = 3 + Math.random() * 4; 
+            corazon.style.animationDelay = `${delay}s`;
+            corazon.style.animationDuration = `${duracion}s`;
+            contenedor.appendChild(corazon);
+        }
+
+        // 2. ACTIVADOR DE ANIMACIONES (LO QUE FALTABA)
+        // Esto hace que el título y el texto aparezcan al hacer scroll
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach(entrada => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('aparecio');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const elementosAAnimar = document.querySelectorAll('.animar-elemento');
+        elementosAAnimar.forEach(el => observador.observe(el));
+
+
+        // 3. GENERADOR DE GALERÍA
+        const cantidadFotos = 138; //CANTIDAD DE FOTOS EN TOTAL 
+        const carpeta = 'imagenes/Fotis/'; 
+        const nombreBase = 'foto'; 
+        const extension = '.jpg'; 
+
+        const contenedorGaleria = document.getElementById('galeria-automatica');
+        const fondoParaEfecto = document.getElementById('fondo-corazones');
+
+        contenedorGaleria.innerHTML = ''
+        
+        for (let i = 1; i <= cantidadFotos; i++) {
+            const marco = document.createElement('div');
+            marco.classList.add('marco-cuadro');
+            const rotacion = (Math.random() * 4) - 2; 
+            marco.style.transform = `rotate(${rotacion}deg)`;
+
+            const paspartu = document.createElement('div');
+            paspartu.classList.add('paspartu');
+
+            const img = document.createElement('img');
+            img.src = `${carpeta}${nombreBase}${i}${extension}`; 
+            img.alt = `Recuerdo número ${i}`;
+            img.loading = "lazy"; 
+
+            img.onerror = function() { marco.style.display = 'none'; };
+
+            paspartu.appendChild(img);
+            marco.appendChild(paspartu);
+            contenedorGaleria.appendChild(marco);
+
+            marco.addEventListener('mouseenter', () => {
+                fondoParaEfecto.classList.add('calmado');
+                marco.style.transform = 'scale(1.05) rotate(0deg)';
+                marco.style.zIndex = '50';
+            });
+
+            marco.addEventListener('mouseleave', () => {
+                fondoParaEfecto.classList.remove('calmado');
+                marco.style.transform = `rotate(${rotacion}deg)`;
+                marco.style.zIndex = '1';
+            });
+        }
+
+
+        // --- CÓDIGO DE LA SORPRESA DEL LOGO ---
+    
+        // 1. Seleccionamos los elementos
+        const logo = document.querySelector('.logo');
+        const modalSorpresa = document.getElementById('modal-sorpresa');
+
+        // 2. Al hacer clic en el LOGO -> Mostrar sorpresa
+        logo.addEventListener('click', () => {
+            modalSorpresa.classList.add('activo');
+        });
+
+        // 3. Al hacer clic en la FOTO o el FONDO -> Ocultar sorpresa
+        modalSorpresa.addEventListener('click', () => {
+            modalSorpresa.classList.remove('activo');
+        });
+    </script>
+
+</body>
+</html>

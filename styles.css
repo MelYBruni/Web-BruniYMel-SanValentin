@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* --- BARRA DE NAVEGACIÓN MINIMALISTA --- */
+.navbar {
+    position: absolute; /* La sacamos del flujo para que flote arriba */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Logo a un lado, menú al otro */
+    align-items: center;
+    padding: 2rem 5%; /* Espaciado interno */
+    z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 3rem; /* Espacio limpio entre enlaces */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white; /* Texto blanco para contraste */
+    font-family: 'Bebas Neue', sans-serif; /* O una sans-serif limpia */
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: rgb(75, 155, 166); /* Tu color turquesa al pasar el mouse */
+}
+
+/* --- ESTILOS PARA LA SORPRESA DEL LOGO --- */
+
+/* 1. Hacemos que el logo parezca un botón */
+.logo {
+    cursor: pointer; /* Manito al pasar el mouse */
+    transition: transform 0.2s ease;
+}
+
+.logo:active {
+    transform: scale(0.9); /* Efecto de "apretar" al hacer clic */
+}
+
+/* 2. El fondo oscuro (Overlay) */
+.modal-sorpresa {
+    position: fixed; /* Se queda fijo en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo negro semitransparente */
+    
+    /* Centramos la foto perfectamente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 2000; /* ¡Por encima de TODO, incluso del menú! */
+    
+    /* Estado inicial: Oculto */
+    opacity: 0;
+    pointer-events: none; /* Para que no moleste cuando no se ve */
+    transition: opacity 0.3s ease;
+}
+
+/* 3. Clase para mostrarlo (La pondremos con JS) */
+.modal-sorpresa.activo {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* 4. La foto graciosa */
+.foto-sorpresa {
+    max-width: 80%;  /* Que no se salga de la pantalla en ancho */
+    max-height: 80%; /* Que no se salga de la pantalla en alto */
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* Resplandor */
+    transform: scale(0.5); /* Empieza chiquita */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote */
+}
+
+/* Cuando se activa, la foto crece a su tamaño normal con rebote */
+.modal-sorpresa.activo .foto-sorpresa {
+    transform: scale(1);
+}

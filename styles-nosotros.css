@@ -1,0 +1,190 @@
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- VARIABLES --- */
+:root {
+  --celeste: #87CEEB;
+  --blanco: #ffffff;
+  --marco-color: #fdfdfd; 
+  --sombra-profunda: 0 15px 25px rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* --- HEADER --- */
+.header-galeria {
+    position: relative;
+    height: auto;
+    z-index: 20;
+}
+
+/* --- FONDO ANIMADO --- */
+.contenedor-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #09012b; 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  overflow: hidden;
+  z-index: -1; 
+}
+
+.corazon {
+  font-size: 24px;
+  text-align: center;
+  color: white; 
+  opacity: 0.2; 
+  transition: opacity 0.5s ease;
+  animation: brillar 4s infinite ease-in-out;
+
+  /*estas tres lineas son solo para que con chrome se vea mejorl con mayor fluidez pero empeora con firefox (porque bruni usa chrome). */
+  will-change: opacity, transform; /* Avisa al navegador que optimice */
+  backface-visibility: hidden;     /* Evita bordes dentados en la animación */
+  transform: translateZ(0);        /* Fuerza a usar la tarjeta gráfica */
+}
+
+@keyframes brillar {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px currentColor; }
+}
+
+.contenedor-fondo.calmado .corazon {
+  animation-play-state: paused; 
+  opacity: 0.15 !important; 
+  filter: blur(1px);
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+/* --- SECCIÓN PRINCIPAL --- */
+.seccion-galeria-nosotros {
+  position: relative;
+  z-index: 10;
+  padding: 150px 20px 60px; 
+  min-height: 100vh;
+  color: white !important;
+}
+
+/* --- INTRODUCCIÓN (TÍTULO Y TEXTO) --- */
+.intro-contenedor {
+    display: flex;             
+    align-items: center;       
+    justify-content: center;   
+    gap: 50px;                 
+    max-width: 1200px;         
+    margin: 0 auto 80px auto;  
+}
+
+.seccion-galeria-nosotros h1 {
+  flex: 1; 
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; 
+  line-height: 0.9;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 0 4px 8px rgba(51, 217, 226, 0.8);
+  text-align: right; 
+  margin: 0; 
+}
+
+.seccion-galeria-nosotros p {
+  flex: 1; 
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: justify;     
+  text-align-last: center;
+  background-color: rgba(0, 1, 1, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(75, 175, 232, 0.3);
+  color: #ffffff;
+  margin: 0; 
+}
+
+/* RESPONSIVE INTRO */
+@media (max-width: 900px) {
+    .intro-contenedor {
+        flex-direction: column; 
+        text-align: center;
+        gap: 30px;
+    }
+    .seccion-galeria-nosotros h1 {
+        text-align: center; 
+        font-size: 3.5rem;
+    }
+}
+
+/* --- ANIMACIONES DE APARICIÓN --- */
+.animar-elemento {
+    opacity: 0;
+    transform: translateY(50px); 
+    transition: all 2s ease-out; 
+}
+
+.animar-elemento.aparecio {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animar-elemento.retraso {
+    transition-delay: 0.5s; 
+}
+
+/* --- ESTILO MASONRY (GALERÍA) --- */
+.pared-masonry {
+    column-count: 3;
+    column-gap: 30px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pared-masonry .marco-cuadro {
+    break-inside: avoid; 
+    margin-bottom: 30px; 
+    background-color: var(--marco-color);
+    padding: 15px;
+    box-shadow: var(--sombra-profunda);
+    border-radius: 2px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: inline-block; 
+    width: 100%;
+}
+
+.paspartu {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #fff;
+}
+
+.marco-cuadro img {
+  width: 100%;
+  height: auto; /* IMPORTANTE: height auto para Masonry */
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9) sepia(20%);
+  transition: filter 0.4s ease;
+}
+
+/* RESPONSIVE MASONRY */
+@media (max-width: 900px) {
+    .pared-masonry { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+    .pared-masonry { column-count: 1; }
+}
