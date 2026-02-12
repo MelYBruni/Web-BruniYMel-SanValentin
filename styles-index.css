@@ -587,3 +587,59 @@ input[type=range]::-webkit-slider-thumb:hover {
     pointer-events: none; /* CLAVE: Para que puedas seguir clickeando la barra */
     overflow: hidden;
 }
+
+
+/* PARA HACERLO RESPONSIVE*/
+
+/* Media Query para Celulares */
+@media (max-width: 768px) {
+    
+    /* 1. Desactivamos el scroll snap si se vuelve molesto en móvil, 
+       o lo dejamos pero ajustamos las alturas */
+    html {
+        scroll-snap-type: none; /* En móvil a veces es mejor scroll libre */
+    }
+
+    /* 2. Ajustamos el Hero (la portada) */
+    .hero-content h1 {
+        font-size: 3rem; /* Reducimos el tamaño de letra gigante */
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+
+    /* 3. Secciones de texto: Menos padding para que no quede tanto aire */
+    .seccion-texto-historia {
+        padding: 4rem 1.5rem;
+    }
+
+    /* 4. Columnas mixtas: Dejamos que se apilen (una arriba de otra) */
+    .contenedor-mixto {
+        flex-direction: column !important;
+        margin: 3rem auto;
+        gap: 1.5rem;
+    }
+
+    .columna-texto, .columna-imagen {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    /* 5. Parallax en móvil: El 'background-attachment: fixed' suele fallar en iOS/Android */
+    .seccion-parallax {
+        background-attachment: scroll; 
+        min-height: 50vh;
+    }
+
+    /* 6. Laboratorio: Ajustamos los ojos para que no ocupen toda la pantalla */
+    .ojo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .titulo-hacker {
+        font-size: 1.8rem;
+    }
+}
+
